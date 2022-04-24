@@ -6,7 +6,7 @@ function initHomeSlider() {
     forceToAxis: true,
 
     pagination: {
-      el: ".swiper-pagination",
+      el: ".content__slider-pagination",
       clickable: true,
     },
   });
@@ -21,7 +21,7 @@ function initInMotionSlider() {
       480: {
         slidesPerView: 2,
       },
-      1400: {
+      1280: {
         slidesPerView: 3,
       },
     },
@@ -34,7 +34,7 @@ function initInMotionSlider() {
       480: {
         slidesPerView: 2,
       },
-      1400: {
+      1280: {
         slidesPerView: 3,
       },
     },
@@ -118,26 +118,29 @@ function setListPaddings() {
 }
 
 function init() {
-  const select = document.getElementById("lang-switcher");
-  const optionsWrapper = document.getElementById("lang-switcher-options");
-  const value = document.getElementById("lang-switcher-value");
-  const options = document.querySelectorAll("#lang-switcher-options li");
+  const select = document.querySelectorAll(".lang-switcher");
+  select.forEach(function (item) {
+    const optionsWrapper = item.querySelector(".lang-switcher-options");
+    const value = item.querySelector(".lang-switcher-value");
+    const options = item.querySelectorAll(".lang-switcher-options li");
 
-  function chooseOption(e) {
-    e.stopPropagation();
-    value.innerHTML = this.innerHTML;
-    toggleSelect(e);
-  }
+    function chooseOption(e) {
+      e.stopPropagation();
+      value.innerHTML = this.innerHTML;
+      toggleSelect(e);
+    }
 
-  function toggleSelect(e) {
-    e.stopPropagation();
-    optionsWrapper.classList.toggle("language__select-options--open");
-  }
+    function toggleSelect(e) {
+      e.stopPropagation();
+      optionsWrapper.classList.toggle("language__select-options--open");
+    }
 
-  select.addEventListener("click", toggleSelect);
-  options.forEach(function (el) {
-    el.addEventListener("click", chooseOption);
+    item.addEventListener("click", toggleSelect);
+    options.forEach(function (el) {
+      el.addEventListener("click", chooseOption);
+    });
   });
+
   function onSidebarToggle() {
     document.querySelector(".sidebar-toggler").classList.toggle("toggled");
     document.querySelector(".sidebar").classList.toggle("sidebar--visible");

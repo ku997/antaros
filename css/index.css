@@ -558,6 +558,10 @@ body {
     width: 100vw;
   }
 }
+.mobile .language__select-options {
+  bottom: 100%;
+}
+
 .language__select {
   display: flex;
   align-items: center;
@@ -622,6 +626,7 @@ body {
   position: absolute;
   transition: 0.3s ease;
   pointer-events: none;
+  background-color: #fff;
 }
 .language__select-options--open {
   opacity: 1;
