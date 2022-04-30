@@ -112,7 +112,7 @@ function setListPaddings() {
   let lists = document.querySelectorAll(".project__content-list");
   lists.forEach(function (item) {
     for (let i = 0; i < item.children.length; i++) {
-      item.children[i].style.paddingLeft = `${20 * (i + 1)}px`;
+      item.children[i].style.paddingLeft = 20 * (i + 1) + "px";
     }
   });
 }
@@ -260,28 +260,49 @@ barba.init({
   debug: true,
   preventRunning: true,
   transitions: [
+    // {
+    //   name: "home",
+    //   namespace: "home",
+    //   async leave(data) {
+    //     if (["home"].includes(data.current.namespace)) {
+    //       await homePageAnimationIn(data.current.container);
+    //     } else {
+    //       await fadeIn(data.current.container);
+    //     }
+    //     data.current.container.remove();
+    //   },
+    //   async enter(data) {
+    //     if (["service", "in-motion", "monster"].includes(data.next.namespace)) {
+    //       await serviceAnimationIn(data.next.container);
+    //     } else {
+    //       await fadeOut(data.next.container);
+    //     }
+    //   },
+    // },
+    // {
+    //   name: "service",
+    //   async leave(data) {
+    //     if (["service", "in-motion", "monster"].includes(data.current.namespace)) {
+    //       await serviceAnimationOut(data.current.container);
+    //     } else {
+    //       await fadeIn(data.current.container);
+    //     }
+    //     data.current.container.remove();
+    //   },
+    //   async enter(data) {
+    //     if (["home"].includes(data.next.namespace)) {
+    //       await homePageAnimationOut(data.next.container);
+    //     } else {
+    //       await fadeOut(data.next.container);
+    //     }
+    //   },
+    // },
     {
-      name: "home",
-      namespace: "home",
+      name: "common",
       async leave(data) {
         if (["home"].includes(data.current.namespace)) {
           await homePageAnimationIn(data.current.container);
-        } else {
-          await fadeIn(data.current.container);
         }
-        data.current.container.remove();
-      },
-      async enter(data) {
-        if (["service", "in-motion", "monster"].includes(data.next.namespace)) {
-          await serviceAnimationIn(data.next.container);
-        } else {
-          await fadeOut(data.next.container);
-        }
-      },
-    },
-    {
-      name: "service",
-      async leave(data) {
         if (["service", "in-motion", "monster"].includes(data.current.namespace)) {
           await serviceAnimationOut(data.current.container);
         } else {
@@ -292,6 +313,9 @@ barba.init({
       async enter(data) {
         if (["home"].includes(data.next.namespace)) {
           await homePageAnimationOut(data.next.container);
+        }
+        if (["service", "in-motion", "monster"].includes(data.next.namespace)) {
+          await serviceAnimationIn(data.next.container);
         } else {
           await fadeOut(data.next.container);
         }

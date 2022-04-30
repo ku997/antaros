@@ -41,6 +41,9 @@ body {
   box-sizing: border-box;
   position: relative;
 }
+p {
+  max-width: 100%;
+}
 
 html,
 body {
@@ -111,7 +114,8 @@ body {
     }
     &-item {
       margin-right: 60px;
-      &:hover {
+      &:hover,
+      &--active {
         a {
           color: #ff2747;
         }
@@ -245,7 +249,7 @@ body {
     border-radius: 4px;
   }
   &::after {
-    top: unset;
+    top: auto;
     bottom: 5px;
     transform-origin: 0% 100%;
   }
@@ -636,5 +640,28 @@ body {
   }
 }
 
-@import url('./main.css');
-@import url('./servises.css');
+.h1 {
+  font-size: 67px;
+  font-family: "RoadRadio";
+  font-weight: 400;
+  line-height: 67.51px;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+  @media screen and (max-width: 1500px) {
+    font-size: 57px;
+    line-height: 57px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 32px;
+    line-height: 32px;
+  }
+  @media screen and (max-width: 576px) {
+    font-size: 22px;
+    line-height: 22px;
+  }
+}
+
+@import url("./main.css");
+@import url("./servises.css");
+@import url("./contacts.css");
