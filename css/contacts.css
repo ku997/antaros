@@ -8,8 +8,12 @@
   padding: 90px 90px 90px 180px;
 }
 .contacts__inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 .contacts__left {
   margin-right: 25px;
@@ -36,9 +40,15 @@
   margin-bottom: 0;
 }
 .contacts__contact {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .contacts__contact-text {
   font-family: "Myriad Pro";
@@ -48,7 +58,8 @@
   color: #ff2747;
   margin: 0;
   margin-right: 20px;
-  flex-shrink: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
 }
 .contacts__contact-image {
   width: 100%;
@@ -104,8 +115,13 @@
     min-height: calc(100vh - 120px);
   }
   .contacts__inner {
-    flex-direction: column;
-    align-items: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
   }
   .contacts__left {
     margin-right: 0;

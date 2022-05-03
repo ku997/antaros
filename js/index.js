@@ -45,6 +45,97 @@ function initInMotionSlider() {
     });
   });
 }
+
+function initServicesSlider() {
+  new Swiper(".services__localization-slider", {
+    direction: "horizontal",
+    slidesPerView: 1,
+    spaceBetween: 15,
+    breakpoints: {
+      576: {
+        slidesPerView: 2,
+      },
+      768: {
+        slidesPerView: 3,
+      },
+      992: {
+        slidesPerView: 4,
+      },
+      1280: {
+        slidesPerView: 6,
+        spaceBetween: 35,
+      },
+    },
+  });
+}
+
+function initContanctsSelect() {
+  const select = document.querySelector(".modal__select");
+  const value = select.querySelector(".modal__select-value");
+  const options = select.querySelectorAll(".modal__select-options li");
+
+  function chooseOption(e) {
+    e.stopPropagation();
+    value.innerHTML = this.innerHTML;
+    toggleSelect(e);
+  }
+
+  function toggleSelect(e) {
+    e.stopPropagation();
+    select.classList.toggle("modal__select--open");
+  }
+
+  select.addEventListener("click", toggleSelect);
+  options.forEach(function (el) {
+    el.addEventListener("click", chooseOption);
+  });
+}
+
+function initContactsModal() {
+  const errorHeader = document.querySelector(".modal__header--error");
+  const initialHeader = document.querySelector(".modal__header");
+  const name = document.querySelector(".modal__input-name");
+  const company = document.querySelector(".modal__input-company");
+  const phone = document.querySelector(".modal__input-phone");
+  const email = document.querySelector(".modal__input-email");
+  const file = document.querySelector(".modal__input-file");
+  const task = document.querySelector(".modal__textarea-input");
+  const doneButton = document.querySelector(".modal__done-btn");
+  const contactsModal = document.querySelector(".contacts-modal");
+  const showModalItems = document.querySelectorAll(".show-modal-button");
+  const modalClosers = document.querySelectorAll(".contact-modal-closer");
+
+  const fields = [name, company, phone, email, file, task];
+  const checkError = () => {
+    let hasError = false;
+
+    fields.forEach((item) => {
+      if (!item.value) {
+        console.log(item.value);
+        hasError = true;
+      }
+    });
+    if (hasError) {
+      initialHeader.style.display = "none";
+      errorHeader.style.display = "block";
+    } else {
+      initialHeader.style.display = "block";
+      errorHeader.style.display = "none";
+    }
+  };
+  showModalItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      contactsModal.classList.add("contacts-modal--open");
+    });
+  });
+  modalClosers.forEach((item) => {
+    item.addEventListener("click", () => {
+      contactsModal.classList.remove("contacts-modal--open");
+    });
+  });
+  doneButton.addEventListener("click", checkError);
+}
+
 function initPlayerApi() {}
 function initPlayer() {
   var tag = document.createElement("script");
@@ -74,7 +165,7 @@ function initPlayer() {
     });
   }
   function onPlayerReady() {
-    var playButtons = document.querySelectorAll("#play-button");
+    const playButtons = document.querySelectorAll("#play-button");
     playButtons.forEach(function (item) {
       item.addEventListener("click", function () {
         const isActive = item.classList.contains("project__content-video-control--active");
@@ -109,9 +200,9 @@ function initPlayer() {
   }
 }
 function setListPaddings() {
-  let lists = document.querySelectorAll(".project__content-list");
+  var lists = document.querySelectorAll(".project__content-list");
   lists.forEach(function (item) {
-    for (let i = 0; i < item.children.length; i++) {
+    for (var i = 0; i < item.children.length; i++) {
       item.children[i].style.paddingLeft = 20 * (i + 1) + "px";
     }
   });
@@ -163,8 +254,8 @@ const tl = gsap.timeline();
 //common animations
 
 function fadeOut(container) {
-  return tl.from(container.querySelector(".main__background"), {
-    opacity: 0,
+  return tl.to(container.querySelector(".main__background"), {
+    opacity: 1,
     duration: 0.8,
   });
 }
@@ -178,7 +269,7 @@ function fadeIn(container) {
 
 //home animation
 
-function homePageAnimationIn(container) {
+function homePageAnimationOut(container) {
   return tl
     .to(container.querySelector(".header__sidebar-background"), {
       height: "0%",
@@ -199,7 +290,7 @@ function homePageAnimationIn(container) {
     );
 }
 
-function homePageAnimationOut(container) {
+function homePageAnimationIn(container) {
   return tl
     .from(container.querySelector(".main__background"), {
       opacity: 1,
@@ -257,67 +348,27 @@ function serviceAnimationOut(container) {
 //init animations
 
 barba.init({
-  debug: true,
   preventRunning: true,
   transitions: [
-    // {
-    //   name: "home",
-    //   namespace: "home",
-    //   async leave(data) {
-    //     if (["home"].includes(data.current.namespace)) {
-    //       await homePageAnimationIn(data.current.container);
-    //     } else {
-    //       await fadeIn(data.current.container);
-    //     }
-    //     data.current.container.remove();
-    //   },
-    //   async enter(data) {
-    //     if (["service", "in-motion", "monster"].includes(data.next.namespace)) {
-    //       await serviceAnimationIn(data.next.container);
-    //     } else {
-    //       await fadeOut(data.next.container);
-    //     }
-    //   },
-    // },
-    // {
-    //   name: "service",
-    //   async leave(data) {
-    //     if (["service", "in-motion", "monster"].includes(data.current.namespace)) {
-    //       await serviceAnimationOut(data.current.container);
-    //     } else {
-    //       await fadeIn(data.current.container);
-    //     }
-    //     data.current.container.remove();
-    //   },
-    //   async enter(data) {
-    //     if (["home"].includes(data.next.namespace)) {
-    //       await homePageAnimationOut(data.next.container);
-    //     } else {
-    //       await fadeOut(data.next.container);
-    //     }
-    //   },
-    // },
     {
       name: "common",
       async leave(data) {
         if (["home"].includes(data.current.namespace)) {
-          await homePageAnimationIn(data.current.container);
-        }
-        if (["service", "in-motion", "monster"].includes(data.current.namespace)) {
+          await homePageAnimationOut(data.current.container);
+        } else if (["service", "in-motion", "monster"].includes(data.current.namespace)) {
           await serviceAnimationOut(data.current.container);
         } else {
-          await fadeIn(data.current.container);
+          await fadeOut(data.current.container);
         }
         data.current.container.remove();
       },
       async enter(data) {
         if (["home"].includes(data.next.namespace)) {
-          await homePageAnimationOut(data.next.container);
-        }
-        if (["service", "in-motion", "monster"].includes(data.next.namespace)) {
+          await homePageAnimationIn(data.next.container);
+        } else if (["service", "in-motion", "monster"].includes(data.next.namespace)) {
           await serviceAnimationIn(data.next.container);
         } else {
-          await fadeOut(data.next.container);
+          await fadeIn(data.next.container);
         }
       },
     },
@@ -350,6 +401,15 @@ barba.init({
       namespace: "service",
       beforeEnter() {
         setListPaddings();
+      },
+    },
+    {
+      namespace: "services",
+      beforeEnter() {
+        setListPaddings();
+        initServicesSlider();
+        initContanctsSelect();
+        initContactsModal();
       },
     },
   ],
